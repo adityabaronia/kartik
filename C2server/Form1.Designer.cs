@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.launch_btn = new System.Windows.Forms.Button();
             this.cmdbox = new System.Windows.Forms.TextBox();
             this.lbloutput = new System.Windows.Forms.Label();
             this.cmdtype_dropdown = new System.Windows.Forms.ComboBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // launch_btn
@@ -71,10 +73,15 @@
             this.cmdtype_dropdown.TabIndex = 4;
             this.cmdtype_dropdown.Text = "cmdtype";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Snow;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.cmdtype_dropdown);
             this.Controls.Add(this.lbloutput);
@@ -82,6 +89,7 @@
             this.Controls.Add(this.launch_btn);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -91,8 +99,9 @@
 
         private System.Windows.Forms.Button launch_btn;
         private System.Windows.Forms.TextBox cmdbox;
-        private System.Windows.Forms.Label lbloutput;
+        public System.Windows.Forms.Label lbloutput;
         private System.Windows.Forms.ComboBox cmdtype_dropdown;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
