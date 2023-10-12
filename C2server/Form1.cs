@@ -11,8 +11,6 @@ using System.Windows.Forms;
 
 namespace C2server
 {
-    
-
     public partial class Form1 : Form
     {
         string data;
@@ -26,27 +24,21 @@ namespace C2server
             InitializeComponent();
         }
 
-
-        //Step2: Press Launch button
-        private void launch_btn_Click(object sender, EventArgs e)
-        {
-            //lbloutput.Text = data;
-            lbloutput_Click(sender, e);
-            if (!string.IsNullOrEmpty(data)) {
-                Beep(500, 1000);
-            }
-            
-        }
-
         //Step1: Write some content in cmdbox
         private void cmdbox_TextChanged(object sender, EventArgs e)
         {
             data = cmdbox.Text;
         }
 
-        public void lbloutput_Click(object sender, EventArgs e)
+        //Step2: Press Launch button
+        private void launch_btn_Click(object sender, EventArgs e)
         {
-            lbloutput.Text = data;
+            outbox.Text = data;
+            
+            if (!string.IsNullOrEmpty(data)) {
+                Beep(500, 1000);
+            }
+            
         }
 
         private void cmdtype_dropdown_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,12 +48,25 @@ namespace C2server
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void startc2_Click(object sender, EventArgs e)
         {
+            C2server.serverModule sModule = new C2server.serverModule();
+            sModule.Initialize_Internet((message) =>
+            {
+                // Use Invoke to update the UI safely from a different thread
+                this.Invoke((MethodInvoker)delegate
+                {
+                    outbox.Text = message;
+                });
+            });
+        }
 
+        private void outbox_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 
@@ -76,20 +81,16 @@ namespace C2server
         [DllImport("wininet.dll", SetLastError = true, CharSet = CharSet.Auto)]
         static extern IntPtr InternetOpen(string lpszAgent, int dwAccessType, string lpszProxyName, string lpszProxyBypass, int dwFlags);
 
-
-
-        private int Initialize_Internet()
+        public int Initialize_Internet(Action<string> updateTextBox)
         {
-            C2server.Form1 frm = new C2server.Form1();
             IntPtr InterHandle = InternetOpen("browser", INTERNET_OPEN_TYPE_DIRECT, null, null, 0);
             if (IntPtr.Zero == InterHandle)
             {
-
-                frm.lbloutput.Text = "Error";
-                //Form1.lbloutput_Click( , System.EventArgs.Empty); 
+                updateTextBox("Error in InternetOpen API");
                 return 1;
             }
-            frm.lbloutput.Text = "InternetOpenAPi working";
+            updateTextBox("InternetOpen API working");
+
             return 0;
         }
 

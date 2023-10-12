@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.launch_btn = new System.Windows.Forms.Button();
             this.cmdbox = new System.Windows.Forms.TextBox();
-            this.lbloutput = new System.Windows.Forms.Label();
             this.cmdtype_dropdown = new System.Windows.Forms.ComboBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.startc2 = new System.Windows.Forms.Button();
+            this.outbox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // launch_btn
@@ -54,16 +53,6 @@
             this.cmdbox.TabIndex = 2;
             this.cmdbox.TextChanged += new System.EventHandler(this.cmdbox_TextChanged);
             // 
-            // lbloutput
-            // 
-            this.lbloutput.AutoSize = true;
-            this.lbloutput.Location = new System.Drawing.Point(390, 256);
-            this.lbloutput.Name = "lbloutput";
-            this.lbloutput.Size = new System.Drawing.Size(37, 13);
-            this.lbloutput.TabIndex = 3;
-            this.lbloutput.Text = "output";
-            this.lbloutput.Click += new System.EventHandler(this.lbloutput_Click);
-            // 
             // cmdtype_dropdown
             // 
             this.cmdtype_dropdown.FormattingEnabled = true;
@@ -73,9 +62,23 @@
             this.cmdtype_dropdown.TabIndex = 4;
             this.cmdtype_dropdown.Text = "cmdtype";
             // 
-            // timer1
+            // startc2
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.startc2.Location = new System.Drawing.Point(13, 13);
+            this.startc2.Name = "startc2";
+            this.startc2.Size = new System.Drawing.Size(75, 23);
+            this.startc2.TabIndex = 5;
+            this.startc2.Text = "Start";
+            this.startc2.UseVisualStyleBackColor = true;
+            this.startc2.Click += new System.EventHandler(this.startc2_Click);
+            // 
+            // outbox
+            // 
+            this.outbox.Location = new System.Drawing.Point(450, 350);
+            this.outbox.Name = "outbox";
+            this.outbox.Size = new System.Drawing.Size(295, 20);
+            this.outbox.TabIndex = 6;
+            this.outbox.TextChanged += new System.EventHandler(this.outbox_TextChanged);
             // 
             // Form1
             // 
@@ -83,8 +86,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Snow;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.outbox);
+            this.Controls.Add(this.startc2);
             this.Controls.Add(this.cmdtype_dropdown);
-            this.Controls.Add(this.lbloutput);
             this.Controls.Add(this.cmdbox);
             this.Controls.Add(this.launch_btn);
             this.Name = "Form1";
@@ -99,9 +103,9 @@
 
         private System.Windows.Forms.Button launch_btn;
         private System.Windows.Forms.TextBox cmdbox;
-        public System.Windows.Forms.Label lbloutput;
         private System.Windows.Forms.ComboBox cmdtype_dropdown;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button startc2;
+        public System.Windows.Forms.TextBox outbox;
     }
 }
 
