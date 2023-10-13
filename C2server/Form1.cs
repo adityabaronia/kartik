@@ -77,19 +77,32 @@ namespace C2server
         const int INTERNET_OPEN_TYPE_DIRECT = 1; // direct to net
         const int INTERNET_OPEN_TYPE_PROXY = 3; // via named proxy
         const int INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY = 4; // prevent using java/script/INS
+        const int INTERNET_SERVICE_HTTP = 3;
+
 
         [DllImport("wininet.dll", SetLastError = true, CharSet = CharSet.Auto)]
         static extern IntPtr InternetOpen(string lpszAgent, int dwAccessType, string lpszProxyName, string lpszProxyBypass, int dwFlags);
+        
+        [DllImport("wininet.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern IntPtr InternetConnect(IntPtr hInternet, string lpszServerName, short nServerPort, string lpszUsername, string lpszPassword, int dwService, int dwFlags, IntPtr dwContext);
 
         public int Initialize_Internet(Action<string> updateTextBox)
         {
-            IntPtr InterHandle = InternetOpen("browser", INTERNET_OPEN_TYPE_DIRECT, null, null, 0);
-            if (IntPtr.Zero == InterHandle)
+            IntPtr InterOpenHandle = InternetOpen("browser", INTERNET_OPEN_TYPE_DIRECT, null, null, 0);
+            if (IntPtr.Zero == InterOpenHandle)
             {
                 updateTextBox("Error in InternetOpen API");
                 return 1;
             }
             updateTextBox("InternetOpen API working");
+
+            IntPtr InterConHandle = InternetConnect(InterOpenHandle, "IPADDRESS", 8080, null, null, INTERNET_SERVICE_HTTP, 0, IntPtr.Zero);
+            if (IntPtr.Zero == InterConHandle)
+            {
+                updateTextBox("Error in InternetConnect API");
+                return 1;
+            }
+            updateTextBox("InternetConnect API working");
 
             return 0;
         }
